@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule I Modding Documentation</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        @font-face {
+            font-family: 'OpenSansSemiBold';
+            src: url('Fonts/OpenSans-SemiBold.ttf') format('truetype');
+        }
+        body {
+            font-family: 'OpenSansSemiBold', Arial, sans-serif;
+            margin: 20px;
+            scroll-behavior: smooth;
+        }
+        h1, h2 { color: #333; }
+        .function {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s ease, border 0.3s ease;
+            position: relative;
+            border-radius: 8px; /* Rounded corners for function outlines */
+        }
+        .function-name { font-weight: bold; color: #007BFF; }
+        .function-description { margin-top: 10px; }
+        .code-block {
+            background-color: #2d2d2d;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .code-block pre {
+            margin: 0;
+            line-height: 1.4; /* Adjust line height to reduce spacing */
+        }
+        .toc { margin-bottom: 20px; }
+        .toc ul { list-style-type: none; padding: 0; }
+        .toc li { margin-bottom: 5px; }
+        .toc a { text-decoration: none; color: #007BFF; cursor: pointer; }
+        .toc a:hover { text-decoration: underline; }
+        .highlight {
+            background-color: #e0f7fa;
+            border: 1px solid #007BFF;
+            border-radius: 8px; /* Rounded corners for highlights */
+        }
+        /* Fix for token spacing and outlines */
+        .token {
+            background: none !important;
+            box-shadow: none !important;
+            text-shadow: none !important;
+            border: none !important;
+            outline: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        code[class*="language-"] {
+            border: none !important;
+            outline: none !important;
+        }
+    </style>
+</head>
+<body>
+    <h1>Schedule I Modding Documentation</h1>
+    <p>Welcome to the modding documentation for Schedule I. Here you will find information on how to use various functions & components to modify the game.</p>
+
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a onclick="scrollToSectionAndHighlight('interactableObject')">Interactable Object</a></li>
+            <!-- Add more links as needed -->
+        </ul>
+    </div>
+
+    <div class="function" id="interactableObject">
+        <h2>Component: <span class="function-name">Interactable Object</span></h2>
+        <div class="function-description">
+            <p>Adds an Interaction Menu to any 3d <a href="https://docs.unity3d.com/Manual/class-GameObject.html" target="_blank">GameObject</a> Interactable.</p>
+            <h3>Fields:</h3>
+            <ul>
+                <li><code>message</code> (string): Message displayed when interaction rendered</li>
+                <li><code>interactionState</code> (EInteractableState): State of interaction</li>
+                <li><code>onInteractionStart</code> (UnityEvent): Triggered on interaction start</li>
+            </ul>
+            <h3>Interaction States:</h3>
+            <div class="code-block">
+                <pre><code class="language-csharp">
+Default
+Invalid
+Disabled
+Label
+                </code></pre>
+            </div>
+            <h3>Code Example:</h3>
+            <div class="code-block">
+                <pre><code class="language-csharp">
+using MelonLoader;
+using UnityEngine;
+
+using Il2CppScheduleOne.Interaction; // Needed For Interactable Objects
+
+public class MyClass : MelonMod
+{
+    // Set To 3D GameObject In Current Scene
+    public GameObject myGameObject;
+
+    // Called On Scene Load
+    public override void OnSceneWasLoaded()
+    {
+        InteractableObject myInteractableObject = myGameObject.AddComponent<InteractableObject>(); // Adds An Interaction Menu To The Gameobject
+        myInteractableObject.message = "Press E To Interact"; // Sets Message On Interaction Menu
+    }
+}
+                </code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add more functions as needed -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+    <script>
+        function scrollToSectionAndHighlight(sectionId) {
+            // Remove highlight from all sections
+            const sections = document.querySelectorAll('.function');
+            sections.forEach(section => {
+                section.classList.remove('highlight');
+            });
+
+            // Get the section element
+            const section = document.getElementById(sectionId);
+
+            // Calculate the position to scroll to
+            const yOffset = -(window.innerHeight / 2) + (section.offsetHeight / 2);
+            const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+            // Scroll to the section
+            window.scrollTo({
+                top: y,
+                behavior: 'smooth'
+            });
+
+            // Add highlight to the clicked section
+            section.classList.add('highlight');
+
+            // Remove highlight after a short delay
+            setTimeout(() => {
+                section.classList.remove('highlight');
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
