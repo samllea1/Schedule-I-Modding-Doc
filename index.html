@@ -10,44 +10,70 @@
             font-family: 'OpenSansSemiBold';
             src: url('Fonts/OpenSans-SemiBold.ttf') format('truetype');
         }
+        :root {
+            --background-color: #ffffff;
+            --text-color: #000000;
+            --highlight-color: #e0f7fa;
+            --border-color: #cccccc;
+            --code-background: #2d2d2d;
+        }
+
         body {
             font-family: 'OpenSansSemiBold', Arial, sans-serif;
             margin: 20px;
+            background-color: var(--background-color);
+            color: var(--text-color);
             scroll-behavior: smooth;
+            transition: background-color 0.3s, color 0.3s;
         }
-        h1, h2 { color: #333; }
+
+        body.dark-mode {
+            --background-color: #121212;
+            --text-color: #ffffff;
+            --highlight-color: #1e1e1e;
+            --border-color: #333333;
+            --code-background: #1e1e1e;
+        }
+
+        h1, h2 { color: var(--text-color); }
+
         .function {
             margin-bottom: 40px;
             padding: 20px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
+            border: 1px solid var(--border-color);
+            background-color: var(--background-color);
             transition: background-color 0.3s ease, border 0.3s ease;
             position: relative;
-            border-radius: 8px; /* Rounded corners for function outlines */
+            border-radius: 8px;
         }
+
         .function-name { font-weight: bold; color: #007BFF; }
         .function-description { margin-top: 10px; }
+
         .code-block {
-            background-color: #2d2d2d;
+            background-color: var(--code-background);
             padding: 10px;
             border-radius: 5px;
             overflow-x: auto;
         }
+
         .code-block pre {
             margin: 0;
-            line-height: 1.4; /* Adjust line height to reduce spacing */
+            line-height: 1.4;
         }
+
         .toc { margin-bottom: 20px; }
         .toc ul { list-style-type: none; padding: 0; }
         .toc li { margin-bottom: 5px; }
         .toc a { text-decoration: none; color: #007BFF; cursor: pointer; }
         .toc a:hover { text-decoration: underline; }
+
         .highlight {
-            background-color: #e0f7fa;
+            background-color: var(--highlight-color);
             border: 1px solid #007BFF;
-            border-radius: 8px; /* Rounded corners for highlights */
+            border-radius: 8px;
         }
-        /* Fix for token spacing and outlines */
+
         .token {
             background: none !important;
             box-shadow: none !important;
@@ -57,13 +83,27 @@
             margin: 0 !important;
             padding: 0 !important;
         }
+
         code[class*="language-"] {
             border: none !important;
             outline: none !important;
         }
+
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
     </style>
 </head>
 <body>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
+
     <h1>Schedule I Modding Documentation</h1>
     <p>Welcome to the modding documentation for Schedule I. Here you will find information on how to use various functions & components to modify the game.</p>
 
@@ -99,7 +139,6 @@ Label
                 <pre><code class="language-csharp">
 using MelonLoader;
 using UnityEngine;
-
 using Il2CppScheduleOne.Interaction; // Needed For Interactable Objects
 
 public class MyClass : MelonMod
@@ -124,30 +163,42 @@ public class MyClass : MelonMod
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
     <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            setDarkModeCookie(document.body.classList.contains('dark-mode'));
+        }
+
+        function setDarkModeCookie(isDarkMode) {
+            document.cookie = `darkMode=${isDarkMode}; path=/; max-age=${60 * 60 * 24 * 365}`;
+        }
+
+        function getDarkModeCookie() {
+            return document.cookie.split('; ').find(row => row.startsWith('darkMode='))?.split('=')[1] === 'true';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (getDarkModeCookie()) {
+                document.body.classList.add('dark-mode');
+            }
+        });
+
         function scrollToSectionAndHighlight(sectionId) {
-            // Remove highlight from all sections
             const sections = document.querySelectorAll('.function');
             sections.forEach(section => {
                 section.classList.remove('highlight');
             });
 
-            // Get the section element
             const section = document.getElementById(sectionId);
-
-            // Calculate the position to scroll to
             const yOffset = -(window.innerHeight / 2) + (section.offsetHeight / 2);
             const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
-            // Scroll to the section
             window.scrollTo({
                 top: y,
                 behavior: 'smooth'
             });
 
-            // Add highlight to the clicked section
             section.classList.add('highlight');
 
-            // Remove highlight after a short delay
             setTimeout(() => {
                 section.classList.remove('highlight');
             }, 1000);
