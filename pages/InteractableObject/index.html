@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule I Modding Documentation</title>
+    <link rel="icon" type="image/x-icon" href="/images/Modding Doc.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        @font-face {
+            font-family: 'OpenSansSemiBold';
+            src: url('Fonts/OpenSans-SemiBold.ttf') format('truetype');
+        }
+        body{
+            background-color: #121212;
+            --text-color: #ffffff;
+            --highlight-color: #1e1e1e;
+            --border-color: #333333;
+            --code-background: #1e1e1e;
+        }
+
+        h1, h2, h3, li, p { color: var(--text-color); }
+
+        .function {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            background-color: var(--background-color);
+            transition: background-color 0.3s ease, border 0.3s ease;
+            position: relative;
+            border-radius: 8px;
+        }
+
+        .function-name { font-weight: bold; color: #007BFF; }
+        .function-description { margin-top: 10px; }
+
+        .code-block {
+            background-color: var(--code-background);
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .highlight {
+            background-color: var(--highlight-color);
+            border: 1px solid #007BFF;
+            border-radius: 8px;
+        }
+
+        .token {
+            background: none !important;
+            box-shadow: none !important;
+            text-shadow: none !important;
+            border: none !important;
+            outline: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        code[class*="language-"] {
+            border: none !important;
+            outline: none !important;
+        }
+
+
+        
+
+        
+    </style>
+</head>
+<body>
+    <div style="overflow: auto;width: 100%;display: grid;grid-template-columns: 20% 80%;">
+    <div class="sidebar" style="margin-right: 20px;">
+        <a href="/"><img src="/Images/Modding Doc.png" alt="Main page" style="width:100%;height:auto;background-color: #121212;"></a>
+
+    </div> 
+
+
+    <div>
+        <h2>Component: <span class="function-name">Interactable Object</span></h2>
+        <div class="function-description">
+            <p>Adds an Interaction Menu to any 3d <a href="https://docs.unity3d.com/Manual/class-GameObject.html" target="_blank">GameObject</a> Interactable.</p>
+            <h3>Fields:</h3>
+            <ul>
+                <li><code>message</code> (string): Message displayed when interaction rendered</li>
+                <li><code>interactionState</code> (EInteractableState): State of interaction</li>
+                <li><code>onInteractionStart</code> (UnityEvent): Triggered on interaction start</li>
+            </ul>
+
+                    <h3>Interaction States:</h3>
+                    <div class="code-block">
+                        <pre><code class="language-csharp">
+Default
+Invalid
+Disabled
+Label
+                        </code></pre>
+                    </div>
+                    <h3>Code Example:</h3>
+                    <div class="code-block">
+                        <pre><code class="language-csharp">
+using MelonLoader;
+using UnityEngine;
+using Il2CppScheduleOne.Interaction; // Needed For Interactable Objects
+                        
+public class MyClass : MelonMod
+{
+    // Set To 3D GameObject In Current Scene
+    public GameObject myGameObject;
+
+    // Called On Scene Load
+    public override void OnSceneWasLoaded()
+    {
+        InteractableObject myInteractableObject = myGameObject.AddComponent<InteractableObject>(); // Adds An Interaction Menu To The Gameobject
+        myInteractableObject.message = "Press E To Interact"; // Sets Message On Interaction Menu
+    }
+}
+                        </code></pre>
+                    </div>
+                    </div>
+            </div>
+        </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+    
+</body>
+</html>
