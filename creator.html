@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function/Component Creator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005bb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Function/Component Creator</h1>
+        <div class="form-group">
+            <label for="type">Type:</label>
+            <select id="type" name="type">
+                <option value="function">Function</option>
+                <option value="component">Component</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="code">Code:</label>
+            <textarea id="code" name="code" required></textarea>
+        </div>
+        <button onclick="exportData()">Export</button>
+    </div>
+
+    <script>
+        function exportData() {
+            const type = document.getElementById('type').value;
+            const name = document.getElementById('name').value;
+            const description = document.getElementById('description').value;
+            const code = document.getElementById('code').value;
+
+            let content;
+            const filename = `${name.replace(/ /g, '_')}.${type === 'function' ? 'js' : 'html'}`;
+
+            if (type === 'function') {
+                // Generate a JavaScript file
+                content = `
+                    // Function: ${name}
+                    // Description: ${description}
+                    function ${name}() {
+                        ${code}
+                    }
+                `;
+            } else {
+                // Generate an HTML file
+                content = `
+                    <div class="function" id="${name.replace(/ /g, '_')}">
+                        <h2>Component: <span class="function-name">${name}</span></h2>
+                        <div class="function-description">
+                            <p>${description}</p>
+                            <div class="code-block">
+                                <pre><code class="language-html">
+                                    ${code}
+                                </code></pre>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            download(filename, content);
+        }
+
+        function download(filename, text) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+    </script>
+</body>
+</html>

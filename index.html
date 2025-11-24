@@ -4,30 +4,143 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schedule I Modding Documentation</title>
-    <link rel="icon" type="image/x-icon" href="/Schedule-I-Modding-Doc/Images/Modding Doc.png">
+    
+    <link rel="icon" type="image/x-icon" href="Images/Modding Doc.png">
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/Schedule-I-Modding-Doc/stylesheat.css">
-    <script src="/Schedule-I-Modding-Doc/main.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --sidebar-bg: #f7f7f7;
+            --sidebar-border: #e0e0e0;
+            --link-color: #0066cc;
+            --code-bg: #f4f4f4;
+            --inline-code-bg: #eee;
+        }
+
+        body.dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --sidebar-bg: #252525;
+            --sidebar-border: #333333;
+            --link-color: #66b3ff;
+            --code-bg: #2d2d2d;
+            --inline-code-bg: #444;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--sidebar-border);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .sidebar img {
+            width: 100%;
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .sidebar h2 { font-size: 1.2rem; margin: 0 0 10px 0; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
+        .sidebar ul { list-style: none; padding: 0; }
+        .sidebar li { margin-bottom: 8px; }
+        .sidebar a { text-decoration: none; color: var(--text-color); transition: color 0.2s; }
+        .sidebar a:hover { color: var(--link-color); }
+        .sidebar a.active { font-weight: bold; color: var(--link-color); }
+
+        .content { flex: 1; padding: 40px 60px; max-width: 900px; }
+
+        h1 { border-bottom: 2px solid var(--sidebar-border); padding-bottom: 10px; margin-top: 0; }
+        h3 { margin-top: 30px; margin-bottom: 10px; }
+        p { line-height: 1.6; }
+        
+        .theme-toggle {
+            margin-bottom: 20px;
+            background: none;
+            border: 1px solid var(--sidebar-border);
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            width: fit-content;
+        }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--sidebar-border); }
+            .content { padding: 20px; }
+        }
+    </style>
 </head>
 <body>
-    <script>onload=onload()</script>
-    <div style="overflow: auto;width: 100%;display: grid;grid-template-columns: 20% 80%;">
-    <div class="sidebar" style="margin-right: 20px;">
-        <a href="/Schedule-I-Modding-Doc/"><img src="/Schedule-I-Modding-Doc/Images/Modding Doc.png" alt="Main page" style="width:100%;height:auto;background-color: transparent;"></a>
-        <button onclick=darkmode() style="border: none;font-size: 40px;background-color: transparent;">🌙</button>
-        <h2>Links</h2>
+
+    <nav class="sidebar">
+        <a href="index.html">
+            <img src="Images/Modding Doc.png" alt="Schedule I Logo">
+        </a>
+        
+        <button class="theme-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">🌙</button>
+        
+        <h2>Documentation</h2>
         <ul>
-            <li><a href="/Schedule-I-Modding-Doc/pages/InteractableObject/">Interactable Object</a></li>
-            <!-- Add more links as needed -->
+            <li><a href="pages/InteractableObject/index.html">Interactable Object</a></li>
         </ul>
-    </div>    
-    <div>
+    </nav>
+
+    <main class="content">
         <h1>Schedule I Modding Documentation</h1>
-        <p>Welcome to the modding documentation for Schedule I. Here you will find information on how to use various functions & components to modify the game.</p>
-    </div>
-    
-    </div>
+        <p>Welcome to the modding documentation for <strong>Schedule I</strong>. Here you will find information on how to use various functions & components to modify the game.</p>
+        
+        <p>Please select a topic from the sidebar to begin.</p>
+    </main>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+    
+    <script>
+        function toggleDarkMode() {
+            const body = document.body;
+            const btn = document.querySelector('.theme-toggle');
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                btn.textContent = "☀️";
+                localStorage.setItem('theme', 'dark');
+            } else {
+                btn.textContent = "🌙";
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.querySelector('.theme-toggle').textContent = "☀️";
+            }
+        });
+    </script>
 </body>
 </html>
