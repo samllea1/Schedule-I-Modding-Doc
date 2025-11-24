@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule I Modding Documentation</title>
+    <link rel="icon" type="image/x-icon" href="/Schedule-I-Modding-Doc/Images/Modding Doc.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Schedule-I-Modding-Doc/stylesheat.css">
+    <script src="/Schedule-I-Modding-Doc/main.js"></script>
+</head>
+<body>
+    <script>onload=onload()</script>
+    <div style="overflow: auto;width: 100%;display: grid;grid-template-columns: 20% 80%;">
+    <div class="sidebar" style="margin-right: 20px;">
+        <a href="/Schedule-I-Modding-Doc/"><img src="/Schedule-I-Modding-Doc/Images/Modding Doc.png" alt="Main page" style="width:100%;height:auto;background-color: transparent;"></a>
+        <button onclick=darkmode() style="border: none;font-size: 40px;background-color: transparent;">🌙</button>
+    </div> 
+
+
+    <div class="content">
+        <h2>Component: <span class="function-name">Interactable Object</span></h2>
+        <div class="function-description">
+            <p>Adds an Interaction Menu to any 3d <a href="https://docs.unity3d.com/Manual/class-GameObject.html" target="_blank">GameObject</a> Interactable.</p>
+            <h3>Fields:</h3>
+            <ul>
+                <li><code>message</code> (string): Message displayed when interaction rendered</li>
+                <li><code>interactionState</code> (EInteractableState): State of interaction</li>
+                <li><code>onInteractionStart</code> (UnityEvent): Triggered on interaction start</li>
+            </ul>
+
+                    <h3>Interaction States:</h3>
+                    <div class="code-block">
+                        <pre><code class="language-csharp">
+Default
+Invalid
+Disabled
+Label
+                        </code></pre>
+                    </div>
+                    <h3>Code Example:</h3>
+                    <div class="code-block">
+                        <pre><code class="language-csharp">
+using MelonLoader;
+using UnityEngine;
+using Il2CppScheduleOne.Interaction; // Needed For Interactable Objects
+                        
+public class MyClass : MelonMod
+{
+    // Set To 3D GameObject In Current Scene
+    public GameObject myGameObject;
+
+    // Called On Scene Load
+    public override void OnSceneWasLoaded()
+    {
+        InteractableObject myInteractableObject = myGameObject.AddComponent<InteractableObject>(); // Adds An Interaction Menu To The Gameobject
+        myInteractableObject.message = "Press E To Interact"; // Sets Message On Interaction Menu
+    }
+}
+                        </code></pre>
+                    </div>
+                    </div>
+            </div>
+        </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,66 @@
+@font-face {
+            font-family: 'OpenSansSemiBold';
+            src: url('Fonts/OpenSans-SemiBold.ttf') format('truetype');
+        }
+        body{
+            --background-color: #ffffff;
+            --text-color: #000000;
+            --highlight-color: #e0f7fa;
+            --border-color: #cccccc;
+            --code-background: #2d2d2d;
+        }
+        .dark-mode{
+            background-color: #121212;
+            --text-color: #ffffff;
+            --highlight-color: #1e1e1e;
+            --border-color: #333333;
+            --code-background: #1e1e1e;
+        }
+
+        h1, h2, h3, li, p { color: var(--text-color); }
+
+        .function {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            background-color: var(--background-color);
+            transition: background-color 0.3s ease, border 0.3s ease;
+            position: relative;
+            border-radius: 8px;
+        }
+
+        .function-name { font-weight: bold; color: #007BFF; }
+        .function-description { margin-top: 10px; }
+
+        .code-block {
+            background-color: var(--code-background);
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .highlight {
+            background-color: var(--highlight-color);
+            border: 1px solid #007BFF;
+            border-radius: 8px;
+        }
+
+        .token {
+            background: none !important;
+            box-shadow: none !important;
+            text-shadow: none !important;
+            border: none !important;
+            outline: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        code[class*="language-"] {
+            border: none !important;
+            outline: none !important;
+        }
