@@ -8,21 +8,157 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/Schedule-I-Modding-Doc/stylesheat.css">
     <script src="/Schedule-I-Modding-Doc/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
 </head>
 <body>
     <script>onload=onload()</script>
-    <div style="overflow: auto;width: 100%;display: grid;grid-template-columns: 20% 80%;">
     <nav class="sidebar" style="margin-right: 20px;">
         <a href="/Schedule-I-Modding-Doc/"><img src="/Schedule-I-Modding-Doc/Images/Modding Doc.png" alt="Main page" style="width:100%;height:auto;background-color: transparent;"></a>
-        <button onclick=darkmode() style="border: none;font-size: 40px;background-color: transparent;"id="drkmd" class="theme-toggle">🌙</button>
-    </nav>   
-    <div class="content">
-        explain how it works
-    </div>
-    
-    </div>
-    <script>function darkmode(){var elem = document.getElementById("drkmd");if (localStorage.getItem('darkmode') === 'true') elem.innerHTML = "🌙";else elem.innerHTML = "☀️";darkmodetogle()}</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+        <button onclick=darkmode() id="drkmd" class="theme-toggle">🌙</button>
+        <h2>Simple Functions</h2>
+        <ul>
+            <li><a href="/Schedule-I-Modding-Doc/pages/InteractableObject/">Interactable Object</a></li>
+            <!-- Add more links as needed -->
+        </ul>
+        <h2>Complex Functions</h2>
+        <ul>
+            <!-- Add more links as needed -->
+        </ul>
+        <h2>Plugin Documentation</h2>
+        <ul>
+            <li><a class="active" href="/Schedule-I-Modding-Doc/pages/MeshLoader/">Mesh Loader</a></li>
+            <!-- Add more links as needed -->
+        </ul>
+        <h2>Not Modding Related</h2>
+        <ul>
+            <li><a href="/Schedule-I-Modding-Doc/pages/About/">about</a></li>
+            <li><a href="/Schedule-I-Modding-Doc/pages/Contact/">Contact us</a></li>
+            <!-- Add more links as needed -->
+        </ul>
+    </nav>  
+    <main class="content">
+        <a href="https://github.com/samllea1/Mesh-Loader">Plugin page</a>
+        <p style="align-content: center;">
+            <img src="/Schedule-I-Modding-Doc/Images/melonloader-logo.png" alt="MelonLoader Logo" width="300"/>
+        </p>
+        <h1>MeshLoader</h1>
+        <p>MeshLoader is a lightweight C# library designed for MelonLoader mods, allowing you to load custom 3D meshes and textures from base64-encoded strings in Unity games. The library uses Unity's Universal Render Pipeline (URP) to apply textures and provides two simple static methods to load a <code>Mesh</code> and a <code>Matereal</code> with a custom texture, making it easy to add dynamic assets to your MelonLoader mods.</p>
+        <p></p>
+        <p>Note: MeshLoader is built for MelonLoader mods and currently supports URP only. Support for other render pipelines may be added in future updates.</p>
+        <p></p>
+        <h2>Features</h2>
+        <ul class="dot-list">
+            <li>Load 3D meshes from base64-encoded OBJ files.</li>
+            <li>Load textures from base64-encoded images (e.g., PNG, JPEG) and apply them to a URP/Lit material.</li>
+            <li>Lightweight and easy to integrate into MelonLoader mods.</li>
+            <li>Error handling with detailed logging for debugging via MelonLoader.</li>
+        </ul>
+        <h2>Installation</h2>
+        <h3>Prerequisites</h3>
+        <ul class="dot-list">
+            <li><b>MelonLoader:</b> Install <a href="https://melonloader.com/">MelonLoader</a> (version 0.5.x or 0.6.x recommended). Follow their <a href="https://melonwiki.xyz/#/README?id=how-to-install-melonloader">installation guide</a> for setup.</li>
+            <li><b>Game with URP:</b> Ensure the Unity game you're modding uses the Universal Render Pipeline (URP).</li>
+            <li><b>.NET Framework:</b> The library is built with .NET Framework for Unity/MelonLoader compatibility.</li>
+        </ul>
+        <h3>Steps</h3>
+        <p>1. <b>Download the DLL:</b></p>
+        <ul><li class="dot">Download <code>MeshLoader.dll</code> from the <a href="https://github.com/YourUsername/MeshLoader/releases">Releases</a> page of it's repository.</li></ul>
+        <p>2. <b>Add to Your MelonLoader Mod:</b></p>
+        <ul class="dot-list">
+            <li>Place <code>MeshLoader.dll</code> in the Plugins folder of your game directory (e.g., <code>GameFolder/Plugins/MeshLoader.dll</code>).</li>
+            <li>Alternatively, if your mod has its own folder (e.g., <code>GameFolder/Mods/YourMod</code>), place it in <code>GameFolder/Mods/YourMod/Plugins/MeshLoader.dll</code>.</li>
+        </ul>
+        <p>3. <b>Verify Setup:</b></p>
+        <ul><li class="dot">Run your game with MelonLoader and check the MelonLoader log (<code>GameFolder/MelonLoader/Latest.log</code>) to ensure the DLL loads without errors.</li></ul>
+        <h2>Usage</h2>
+        <p>MeshLoader provides two static methods under the <code>MeshLoader</code> namespace: <code>GetCustomMesh</code> and <code>GetCustomTexture</code>. These methods allow you to load a mesh and a material with a custom texture directly from base64 strings in your MelonLoader mod.</p>
+        <h3>Example: Loading a Mesh and Texture in a MelonLoader Mod</h3>
+        <p>Below is an example of how to use MeshLoader in a MelonLoader mod to load a custom mesh and texture into a scene:</p>
+<pre><code class="language-csharp">
+using MelonLoader;
+using UnityEngine;
+using MeshLoader;
+
+public class MyMod : MelonMod
+{
+    public override void OnSceneWasLoaded(int buildIndex, string sceneName)
+    {
+        MelonLogger.Msg($"Scene: {sceneName} Was Loaded");
+
+        if (sceneName == "Menu")
+        {
+            // Replace these with your actual base64-encoded strings
+            string base64Mesh = "/* Your base64-encoded OBJ string */";
+            string base64Texture = "/* Your base64-encoded image string */";
+
+            // Load the mesh and material
+            Mesh mesh = MeshLoaderUtility.GetCustomMesh(base64Mesh);
+            Material material = MeshLoaderUtility.GetCustomTexture(base64Texture);
+
+            if (mesh != null && material != null)
+            {
+                // Create a GameObject to display the mesh
+                GameObject meshObject = new GameObject("CustomMesh");
+                meshObject.layer = LayerMask.NameToLayer("Default");
+                MeshFilter meshFilter = meshObject.AddComponent<MeshFilter>();
+                MeshRenderer meshRenderer = meshObject.AddComponent<MeshRenderer>();
+                meshFilter.mesh = mesh;
+                meshRenderer.material = material;
+
+                MelonLogger.Msg("Custom mesh and material loaded successfully!");
+            }
+            else
+            {
+                MelonLogger.Msg("Failed to load mesh or material.");
+            }
+        }
+    }
+}
+
+</code></pre>
+        <h2>API Reference</h2>
+        <h3><code>MeshLoaderUtility.GetCustomMesh(string base64)</code></h3>
+        <li><b>Description:</b> Loads a 3D mesh from a base64-encoded OBJ file string.</li>
+        <li><b>Parameters:</b></li>
+        <ul><li class="dot"><code>base64</code>: A base64-encoded string representing an OBJ file</li></ul>
+        <p>on <a href="https://emn178.github.io/online-tools/base64_encode_file.html">this</a> page you can base64-encode files</p>
+        <li><b>Returns:</b></li>
+        <ul><li class="dot"><code>UnityEngine.Mesh</code>: The loaded mesh, or <code>null</code> if an error occurs.</li></ul>
+        <li><b>Example:</b></li>
+<pre><code class="language-csharp">
+Mesh mesh = MeshLoaderUtility.GetCustomMesh("YourBase64String");
+if (mesh != null)
+{
+    MelonLogger.Msg("Mesh loaded successfully!");
+}
+
+</code></pre>
+        <h3><code>MeshLoaderUtility.GetCustomTexture(string base64)</code></h3>
+        <li><b>Description:</b> Loads a texture from a base64-encoded image (e.g., PNG, JPEG) and applies it to a URP/Lit material.</li>
+        <li><b>Parameters:</b></li>
+        <ul><li class="dot"><code>base64</code>: A base64-encoded string representing an image file.</li></ul>
+        <li><b>Returns:</b></li>
+        <ul><li class="dot"><code>UnityEngine.Material</code>: A material with the "Universal Render Pipeline/Lit" shader and the loaded texture applied, or null if an error occurs. Falls back to the "Standard" shader if URP/Lit is unavailable.</li></ul>
+        <li><b>Example:</b></li>
+<pre><code class="language-csharp">
+Material material = MeshLoaderUtility.GetCustomTexture("YourBase64Texture");
+if (material != null)
+{
+    MelonLogger.Msg("Material with texture loaded successfully!");
+}
+
+</code></pre>
+        <h2>Limitations</h2>
+        <li>Designed specifically for <b>MelonLoader mods</b>; not intended for standalone Unity projects.</li>
+        <li>Currently supports <b>Universal Render Pipeline (URP)</b> only. If URP is not set up in the game, the library falls back to the "Standard" shader, which may not render correctly.</li>
+        <li>The OBJ parser assumes a basic format (vertices, UVs, and faces). Complex OBJ features (e.g., materials, smoothing groups) are not supported.</li>
+        <li>Base64 strings must be valid and correctly encoded (OBJ for meshes, image formats like PNG/JPEG for textures).</li>
+        <h2>Troubleshooting</h2>
+        <li><b>DLL Not Found:</b> Ensure <code>MeshLoader.dll</code> is in the correct folder (<code>GameFolder/Plugins</code> or <code>GameFolder/Mods/YourMod/Plugins</code>).</li>
+        <li><b>TypeLoadException:</b> Verify the DLL name (<code>MeshLoader.dll</code>, no spaces) and ensure the namespace (<code>MeshLoader</code>) is correctly imported.</li>
+        <li><b>Shader Issues:</b> Confirm the game you're modding uses URP. If the "Universal Render Pipeline/Lit" shader is not found, check the game's render pipeline setup.</li>
+        <li><b>MelonLoader Logs:</b> Check <code>GameFolder/MelonLoader/Latest.log</code> for detailed error messages.</li>ww
+    </main>
 </body>
 </html>
