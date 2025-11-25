@@ -51,6 +51,15 @@
             border-radius: 8px;
         }
 
+        .sidebar button {
+            margin-bottom: 20px;
+            background: none;
+            cursor: pointer;
+            border: none;
+            font-size: 40px;
+            background-color: transparent;
+        }
+
         .sidebar h2 { font-size: 1.2rem; margin: 0 0 10px 0; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
         .sidebar ul { list-style: none; padding: 0; }
         .sidebar li { margin-bottom: 8px; }
@@ -76,17 +85,6 @@
             border-radius: 4px;
             font-family: monospace;
             font-size: 0.9em;
-        }
-
-        .theme-toggle {
-            margin-bottom: 20px;
-            background: none;
-            border: 1px solid var(--sidebar-border);
-            border-radius: 5px;
-            padding: 5px 10px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            width: fit-content;
         }
 
         @media (max-width: 768px) {
